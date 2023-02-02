@@ -16,8 +16,8 @@ const morgan = require('morgan');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags:'a'});
 
-const privateKey = fs.readFileSync('server.key');
-const certificate = fs.readFileSync('server.cert');
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
 
 const app = express();
 
@@ -47,6 +47,11 @@ app.use('/purchase', purchaseRoutes);
 app.use('/premium', premiumRoutes);
 app.use('/password', passwordRoutes);
 
+app.use((req, res)=>{
+    console.log('url:', req.url);
+    res.sendFile(path.join(__dirname, `public/${req.url}`));
+})
+
 //const { ConfigurationServicePlaceholders } = require('aws-sdk/lib/config_service_placeholders');
 
 User.hasMany(Expense);
@@ -67,7 +72,7 @@ sequelize
     //    https
     //    .createServer({key: privateKey, cert: certificate}, app)
     //    .listen(process.env.PORT || 8080);
-          app.listen(process.env.PORT || 8080);
+           app.listen(process.env.PORT || 8080);
     })
     .catch(err => {
         console.log(err);
