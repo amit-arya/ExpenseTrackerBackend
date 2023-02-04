@@ -7,7 +7,7 @@ async function expense(e){
       category: e.target.category.value
     }
 
-    await axios.post("http://localhost:8080/add-expense", expenseDetails)
+    await axios.post("http://54.144.20.123:8080/add-expense", expenseDetails)
     .then(res=>{
         showExpenseOnScreen(res.data.newExpense);
     }).catch(err=>{
@@ -17,7 +17,7 @@ async function expense(e){
 
 window.addEventListener("DOMContentLoaded", async()=>{
     const token = localStorage.getItem('token');
-    await axios.get("http://localhost:8080/get-expenses",{ headers: {"Authorization":token }})
+    await axios.get("http://54.144.20.123:8080/get-expenses",{ headers: {"Authorization":token }})
     .then((response)=>{
         for(let i=0;i<response.data.expenses.length;i++){
             showExpenseOnScreen(response.data.expenses[i]);
@@ -38,7 +38,7 @@ function showExpenseOnScreen(expense){
 }
 
 async function deleteExpense(id){
-    await axios.delete(`http://localhost:8080/delete-expense/${id}`)
+    await axios.delete(`http://54.144.20.123:8080/delete-expense/${id}`)
     .then((res) =>{
      removeExpenseFromScreen(id);
     })

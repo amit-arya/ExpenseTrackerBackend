@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const https = require('https');
+//const https = require('https');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -10,23 +10,23 @@ dotenv.config();
 
 const sequelize = require('./util/database');
 var cors = require('cors');
-const helmet = require('helmet');
-const compression = require('compression');
-const morgan = require('morgan');
+//const helmet = require('helmet');
+//const compression = require('compression');
+//const morgan = require('morgan');
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags:'a'});
+//const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags:'a'});
 
-//const privateKey = fs.readFileSync('server.key');
-//const certificate = fs.readFileSync('server.cert');
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
 
 const app = express();
 
 app.use(cors());
-app.use(helmet());
-app.use(compression());
-app.use(morgan('combined', { stream: accessLogStream }));
+//app.use(helmet());
+//app.use(compression());
+//app.use(morgan('combined', { stream: accessLogStream }));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const expenseRoutes = require('./routes/expense-routes');
@@ -67,12 +67,12 @@ User.hasMany(FileURL);
 FileURL.belongsTo(User);
 
 sequelize
-    .sync()
+    .sync({force:true})
     .then(result => {
     //    https
     //    .createServer({key: privateKey, cert: certificate}, app)
     //    .listen(process.env.PORT || 8080);
-          app.listen(process.env.PORT || 8080);
+           app.listen(process.env.PORT || 8080);
     })
     .catch(err => {
         console.log(err);
